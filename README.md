@@ -6,8 +6,7 @@ View the case study [here](https://8weeksqlchallenge.com/case-study-1/)
 
 # Entity Relationship Diagram
 
-![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/6fb31fea-ac89-4f2a-859e-743c971511af)
-
+<img src="https://user-images.githubusercontent.com/81607668/127271130-dca9aedd-4ca9-4ed8-b6ec-1e1920dca4a8.png" width="300">
 
 
 
