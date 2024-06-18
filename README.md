@@ -34,9 +34,10 @@ Danny’s Diner is in need of your assistance to help the restaurant stay afloat
 # Solution
 ## 1. What is the total amount each customer spent at the restaurant?
 
-SELECT 
-  customer_id, 
-  COUNT(DISTINCT order_date) AS visit_count
-FROM dannys_diner.sales
-GROUP BY customer_id;
-
+```
+use dinny;
+select * from menu;
+select s.customer_id ,sum(m.price) from sales s inner join menu m
+on s.product_id=m.product_id
+group by customer_id;
+```
