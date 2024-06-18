@@ -34,3 +34,9 @@ Danny’s Diner is in need of your assistance to help the restaurant stay afloat
 # Solution
 ## 1. What is the total amount each customer spent at the restaurant?
 
+SELECT 
+  customer_id, 
+  COUNT(DISTINCT order_date) AS visit_count
+FROM dannys_diner.sales
+GROUP BY customer_id;
+
