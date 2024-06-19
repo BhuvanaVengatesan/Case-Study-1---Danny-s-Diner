@@ -35,12 +35,15 @@ Danny’s Diner is in need of your assistance to help the restaurant stay afloat
 ## 1. What is the total amount each customer spent at the restaurant?
 
 ```
-use dinny;
-select * from menu;
-select s.customer_id ,sum(m.price) from sales s inner join menu m
-on s.product_id=m.product_id
-group by customer_id;
+SELECT s.customer_id , CONCAT('$', (SUM(m.price))) AS total_sales
+FROM sales s INNER JOIN menu m
+ON s.product_id=m.product_id
+GROUP BY customer_id;
 ```
 
 ![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/e2a265b4-5172-478b-8edf-72740cd883d3)
 
+## 2. How many days has each customer visited the restaurant?
+```
+
+```
