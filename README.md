@@ -74,5 +74,42 @@ LIMIT 1;
 ```
 ![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/adbc6ea0-0075-46fe-ada8-7f24b6c5a741)
 
+## 5. Which item was the most popular for each customer?
 
+```
+WITH fav_item AS (
+SELECT 
+s.customer_id, 
+m.product_name, 
+COUNT(s.product_id) AS order_count,
+DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY COUNT(s.product_id) DESC) AS Ranking
+FROM sales AS s 
+INNER JOIN menu AS m
+ON  s.product_id=m.product_id
+GROUP BY s.customer_id, m.product_name
+)
+SELECT customer_id, product_name, order_count FROM fav_item
+WHERE ranking=1;
+
+```
+![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/6b1d7024-7da2-4767-beaa-0dcefb885ef6)
+
+## 6. Which item was purchased first by the customer after they became a member?
+```
+WITH FirstItems_AfterMember AS
+( 
+SELECT s.customer_id, 
+m.product_name, 
+DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY s.order_date) AS ranking 
+FROM sales s JOIN menu m
+ON s.product_id=m.product_id 
+JOIN members a 
+ON a.customer_id=s.customer_id 
+WHERE s.order_date >= a.join_date)
+
+SELECT customer_id, product_name FROM FirstItems_AfterMember
+WHERE ranking=1;
+
+```
+![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/68a30af4-411f-415c-bdc4-a31d07bbe39d)
 
