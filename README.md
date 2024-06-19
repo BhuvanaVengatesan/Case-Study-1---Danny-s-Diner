@@ -113,9 +113,14 @@ WHERE ranking=1;
 ![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/68a30af4-411f-415c-bdc4-a31d07bbe39d)
 
 ## 7. Which item was purchased just before the customer became a member?
+```
 
 ```
-SELECT  s.customer_id, COUNT(s.product_id) AS total_items, SUM(m.price) AS amount_spent
+
+## 8.  What is the total items and amount spent for each member before they became a member?
+
+```
+SELECT  s.customer_id, COUNT(s.product_id) AS total_items, CONCAT('$', SUM((m.price))) AS amount_spent
 FROM sales AS s 
 INNER JOIN menu AS m 
 ON s.product_id = m.product_id
@@ -124,4 +129,5 @@ ON b.customer_id = s.customer_id
 WHERE s.order_date < b.join_date
 GROUP BY s.customer_id;
 ```
-![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/0b908dd7-ad49-48a2-83d7-590f83d174ce)
+![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/fdc5238b-7873-4ce2-94c5-2477776ed99a)
+
