@@ -63,4 +63,16 @@ WHERE rank1=1;
 ```
 ![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/dcf2cd3e-a3f7-4c1d-b670-b03dbb64a811)
 
+## 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
+```
+SELECT m.product_name, COUNT(s.product_id) AS ordered FROM sales AS s 
+INNER JOIN menu AS m
+ON  s.product_id=m.product_id
+GROUP BY m.product_name
+ORDER BY COUNT(s.product_id) DESC
+LIMIT 1;
+```
+![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/adbc6ea0-0075-46fe-ada8-7f24b6c5a741)
+
+
 
