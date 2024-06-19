@@ -50,3 +50,17 @@ GROUP BY customer_id;
 ```
 ![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/7afb7197-bc62-4910-9448-687f82cf02d7)
 
+## 3. What was the first item from the menu purchased by each customer?
+```
+WITH cte AS(
+SELECT s.customer_id, m.product_name, s.order_date, 
+DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY s.order_date) AS rank1 FROM sales s INNER JOIN menu m
+ON s.product_id=m.product_id
+GROUP BY  s.customer_id, m.product_name, s.order_date
+)
+SELECT customer_id, product_name FROM cte
+WHERE rank1=1;
+```
+![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/dcf2cd3e-a3f7-4c1d-b670-b03dbb64a811)
+
+
