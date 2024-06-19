@@ -45,5 +45,8 @@ GROUP BY customer_id;
 
 ## 2. How many days has each customer visited the restaurant?
 ```
-
+SELECT customer_id, COUNT(DISTINCT(order_date)) AS days_visited FROM sales
+GROUP BY customer_id;
 ```
+![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/7afb7197-bc62-4910-9448-687f82cf02d7)
+
