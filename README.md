@@ -41,3 +41,6 @@ select s.customer_id ,sum(m.price) from sales s inner join menu m
 on s.product_id=m.product_id
 group by customer_id;
 ```
+
+![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/e2a265b4-5172-478b-8edf-72740cd883d3)
+
