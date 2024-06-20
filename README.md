@@ -114,8 +114,21 @@ WHERE ranking=1;
 
 ## 7. Which item was purchased just before the customer became a member?
 ```
-
+WITH cte as (
+SELECT  s.customer_id, m.product_name, 
+DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY s.order_date DESC) AS Rank1
+FROM sales AS s 
+INNER JOIN menu AS m 
+ON s.product_id = m.product_id
+INNER JOIN members AS b
+ON b.customer_id = s.customer_id
+WHERE s.order_date < b.join_date
+)
+SELECT customer_id, product_name from cte
+WHERE rank1=1;
 ```
+![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/917344e6-a71c-4e45-b6ca-35091aef36ba)
+
 
 ## 8.  What is the total items and amount spent for each member before they became a member?
 
@@ -130,4 +143,46 @@ WHERE s.order_date < b.join_date
 GROUP BY s.customer_id;
 ```
 ![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/fdc5238b-7873-4ce2-94c5-2477776ed99a)
+
+## 9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+```
+WITH cte AS (
+SELECT s.customer_id, m.product_name,
+CASE WHEN m.product_name='sushi' THEN m.price*20
+ELSE m.price*10 END AS points
+FROM sales AS s 
+INNER JOIN menu AS m
+ON s.product_id=m.product_id
+)
+SELECT customer_id, sum(points) AS total_points
+FROM cte
+GROUP BY customer_id
+ORDER BY customer_id;
+```
+![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/1ed45a74-6a8c-46a3-bab2-5c46780cc77d)
+
+## 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+```
+WITH cte AS
+  (SELECT join_date,
+          DATE_ADD(join_date, INTERVAL 6 DAY) AS program_date,
+          customer_id
+   FROM members)
+SELECT s.customer_id,
+       SUM(CASE
+               WHEN s.order_date BETWEEN b.join_date AND b.program_date THEN m.price*20
+               WHEN s.order_date NOT BETWEEN b.join_date AND b.program_date
+                    AND m.product_name = 'sushi' THEN m.price*20
+               WHEN s.order_date NOT BETWEEN b.join_date AND b.program_date
+                    AND m.product_name != 'sushi' THEN m.price*10
+           END) AS customer_points
+FROM menu AS m
+INNER JOIN sales AS s ON m.product_id = s.product_id
+INNER JOIN cte AS b ON b.customer_id = s.customer_id
+AND s.order_date <='2021-01-31'
+AND s.order_date >=join_date
+GROUP BY s.customer_id
+ORDER BY s.customer_id;
+```
+![image](https://github.com/BhuvanaVengatesan/Danny-s-Diner-SQL-Challenges/assets/172362151/405bff05-1961-4bc1-8b09-6e25b52112de)
 
